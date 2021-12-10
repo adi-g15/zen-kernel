@@ -219,6 +219,13 @@ static s32 nct6775_access(struct i2c_adapter * adap, u16 addr,
 			break;
 		case I2C_SMBUS_BYTE_DATA:
 			tmp_data.byte = data->byte;
+			fallthrough;
+			/*FIXME: Till commit: 386909736e4b94ca0b82f9015d25b36c148c20ce,
+			 * there was no explicit fallthrough, nor break, which is a
+			 * deprecated usage as per:
+			 * https://www.kernel.org/doc/html/latest/process/deprecated.html
+			 * So, putting a 'fallthrough' here, preferably the code writer
+			 * should see it */
 		case I2C_SMBUS_BYTE:
 			outb_p((addr << 1) | read_write,
 			       SMBHSTADD);
